@@ -30,7 +30,7 @@ exports.PhoneClass = function() {
 				var e = item.get(val+'/exampleNumber');
 				if(!t || !e) { return; }
 				if(!territory.phoneLength) { territory.phoneLength = e.text().length; }
-				territory.patterns[val] = new RegExp(t.text().replace(/[\s\n]/gm,''))
+				territory.patterns[val] = new RegExp(t.text().replace(/[\s\n]/gm,''));
 			});
 			shema[territory.id] = territory;
 		});
@@ -61,6 +61,7 @@ exports.PhoneClass = function() {
 		});
 		if(!guess.length) { return; } // first pass - code not found
 
+		fix this logic :()
 		var ret;
 		_(guess).each(function(item) {
 			var ter = shema[item.id];
@@ -79,6 +80,58 @@ exports.PhoneClass = function() {
 		return ret;
 	}
 
+	var isCodeInRange = function(code, range) {
+		for(var i in range) {
+			if(range[i].test(code)) {
+				return true;
+			}
+		}
+	};
+
+/*
+ * Return all available ranges for this partial number
+ */
+	var iterateFromCode = function(num) {
+		var stat = countryFromNumber(num);
+		if(!stat) { return; }
+		var pat = shema[stat.country].patterns;
+		console.log(stat);
+
+		var recursiveIterate = function(code) {
+			if(code.length >= stat.length) { return; }
+			
+			if(isCodeInRange(code, pat)) {
+				console.log('found main code we can handle: %s', code);
+				return;
+			}
+			for(var i=0; i<=9; i++) {
+				var str = code.concat(i);
+				if(!isCodeInRange(str, pat)) {
+					recursiveIterate(str);
+				} else {
+					console.log('found code we can handle: %s', str);
+				}
+			}
+		};
+
+		recursiveIterate(num);
+		// if(code.length >= MAX_LENGTH) { return; }
+		// if(isCodeInRange(code)) {
+		// 	console.log('found main code we can handle: %s', code);
+		// 	return;
+		// }
+		// for(var i=0; i<=9; i++) {
+		// 	var str = code.concat(i);
+		// 	if(!isCodeInRange(str)) {
+		// 		iterateFromCode(str);
+		// 	} else {
+		// 		console.log('found code we can handle: %s', str);
+		// 	}
+		// }
+	}
+
+	iterateFromCode('1');
+
 /*
  * 
  */
@@ -91,8 +144,26 @@ exports.PhoneClass = function() {
  * 
  */
 	this.isPhoneValid = function(phone) {
-
+		
 	}
 
 
 }
+
+var phone = new exports.PhoneClass();
+
+
+// var nextPhoneInCode = function(code) {
+// 	if(!_codes[code]) {
+// 		_codes[code] = {
+// 			min: padPhone(code),
+// 			max: padPhone(code, true)
+// 		}
+// 	}
+// 	_codes[code].current = _codes[code].current ? ++_codes[code].current : _codes[code].min;
+// 	if(_codes[code].current > _codes[code].max) {
+// 		delete _codes[code];
+// 		return;
+// 	}
+// 	return _codes[code].current;
+// }
