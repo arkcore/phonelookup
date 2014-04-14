@@ -19,18 +19,21 @@ exports.PhoneClass = function() {
 			if(item.name() !== 'territory') { return; }
 			
 			var territory = {
-				id: 			item.attr('id').value(),
-				countryCode: 	item.attr('countryCode').value(),
-				patterns: 		{},
-				// nationalPattern: new RegExp(item.get('generalDesc/nationalNumberPattern').text().replace(/[\s\n]/gm,'')),
-				phoneLength: 	null
+				id: item.attr('id').value(),
+				countryCode: item.attr('countryCode').value(),
+				types: {},
+				phoneLength: null
 			}
-			_(phoneTypes).each(function(val) {
+			_.each(phoneTypes, function(val) {
 				var t = item.get(val+'/nationalNumberPattern');
 				var e = item.get(val+'/exampleNumber');
 				if(!t || !e) { return; }
-				if(!territory.phoneLength) { territory.phoneLength = e.text().length; }
-				territory.patterns[val] = new RegExp(t.text().replace(/[\s\n]/gm,''));
+				territory.types[val] = {
+					regexp: new RegExp(t.text().replace(/[\s\n]/gm,'')),
+					example: e.text()
+				}
+				if(!territory.phoneLength) // may be we should divide length to every pattern?
+					territory.phoneLength = territory.types[val].example.length;
 			});
 			shema[territory.id] = territory;
 		});
@@ -47,10 +50,12 @@ exports.PhoneClass = function() {
 
 /*
  * Try to find country id by number (or its part). First guess returned
+ * return example: '123' => { id: 'US', code: '1', line: '23' } or undefined
  */
 	var countryFromNumber = function(num) {
+		if(typeof num == 'number') num = num.toString();
 		var guess = [];
-		_(shema).each(function(item) {
+		_.each(shema, function(item) {
 			if(item.countryCode === num.substring(0, item.countryCode.length)) {
 				guess.push({
 					id: item.id,
@@ -60,24 +65,17 @@ exports.PhoneClass = function() {
 			}
 		});
 		if(!guess.length) { return; } // first pass - code not found
-
-		fix this logic :()
-		var ret;
-		_(guess).each(function(item) {
+		if(guess.length === 1) { // only one found - ideal
+			return guess[0];
+		}
+	
+		return _.find(guess, function(item) {
 			var ter = shema[item.id];
-			var phone = padPhone(item.line, ter.phoneLength);
-			_(ter.patterns).each(function(pat, key) {
-				if(pat.test(phone)) { // !!! found
-					return ret = {
-						country: 	item.id,
-						code: 		item.code,
-						line: 		item.line,
-						type: 		key
-					}
-				}
+			return _.find(ter.types, function(type, key) {
+				var testPhone = item.line + type.example.substring(item.line.length);
+				return type.regexp.test(testPhone);
 			});
 		});
-		return ret;
 	}
 
 	var isCodeInRange = function(code, range) {
@@ -86,7 +84,7 @@ exports.PhoneClass = function() {
 				return true;
 			}
 		}
-	};
+	}
 
 /*
  * Return all available ranges for this partial number
@@ -94,7 +92,7 @@ exports.PhoneClass = function() {
 	var iterateFromCode = function(num) {
 		var stat = countryFromNumber(num);
 		if(!stat) { return; }
-		var pat = shema[stat.country].patterns;
+		var pat = shema[stat.country].types.regexp;
 		console.log(stat);
 
 		var recursiveIterate = function(code) {
@@ -129,9 +127,6 @@ exports.PhoneClass = function() {
 		// 	}
 		// }
 	}
-
-	iterateFromCode('1');
-
 /*
  * 
  */
@@ -149,8 +144,6 @@ exports.PhoneClass = function() {
 
 
 }
-
-var phone = new exports.PhoneClass();
 
 
 // var nextPhoneInCode = function(code) {

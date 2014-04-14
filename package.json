@@ -1,0 +1,8 @@
+{
+  "name": "phone-lookup",
+  "version": "0.0.1",
+  "description": "Phone lookup",
+  "dependencies": {
+    "lodash": "*"
+  }
+}
