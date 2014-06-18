@@ -14,10 +14,13 @@ var test = new Phone;
 // console.log(iterator.getNext())
 // var it = new test.Iterator('1');
 
-var phone = test.normalize('+7921-241906a:)');
+// var phone = test.format('+7921-241906a:)');
+var before = '+1 212 CALL NOW';
+var after = test.normalize(before);
 
-console.log(test.isValid(phone))
+console.log('before: %s, after: %s', before, after);
 
+console.log(test.isValid(after))
 
 // isPhoneValid
 // formatPhone
