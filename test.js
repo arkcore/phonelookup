@@ -12,9 +12,11 @@ var test = new Phone;
 // // var iterator2 = new phone.Iterator('11')
 // console.log(iterator.getNext())
 // console.log(iterator.getNext())
-var it = new test.Iterator('1');
+// var it = new test.Iterator('1');
 
-console.log(it.getNext());
+var phone = test.normalize('+7921-241906a:)');
+
+console.log(test.isValid(phone))
 
 
 // isPhoneValid
