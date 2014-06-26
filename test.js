@@ -4,7 +4,7 @@ var utils = require('./lib/utils');
 
 var Phone = require('./');
 
-var test = new Phone;
+var test = new Phone();
 // console.log(range);
 
 // var phone = new Phone;
@@ -20,7 +20,7 @@ var after = test.normalize(before);
 
 console.log('before: %s, after: %s', before, after);
 
-console.log(test.isValid(after))
+console.log(test.isValid(after));
 
 // isPhoneValid
 // formatPhone
