@@ -7,8 +7,9 @@ valid phone range generation, phone validation and number formatting
 ```
 var Phone = require('phone-lookup');
 
-// valid phone types by default: ['generalDesc', 'fixedLine', 'mobile', 'personalNumber', 'tollFree', 'premiumRate']
-// you can test only mobiles and home numbers by default:
+// valid phone types by default: ['generalDesc', 'fixedLine', 'mobile', 'personalNumber',
+// 'tollFree', 'premiumRate']
+// you can test only mobiles and home numbers for example:
 // var phone = new Phone(['fixedLine', 'mobile']);
 
 var phone = new Phone();
