@@ -14,6 +14,9 @@
   "devDependencies": {
     "mocha": "*"
   },
+  "scripts": {
+    "test": "mocha"
+  },
   "author": "Arkcore Team",
   "license": "Private"
 }
