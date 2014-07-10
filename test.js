@@ -6,7 +6,7 @@ var Phone = require('./');
 
 var test = new Phone();
 var phones = [
-  '+1 212 CALL NOW'
+  '+3 (093) 004-07-44'
 ];
 
 phones.forEach(function(p) {
