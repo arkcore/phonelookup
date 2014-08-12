@@ -1,8 +1,7 @@
 {
   "name": "phone-lookup",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Phone lookup",
-  "private": true,
   "repository": {
     "type": "git",
     "url": "git://github.com/arkcore/phone-lookup.git"
