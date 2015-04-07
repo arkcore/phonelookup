@@ -1,7 +1,7 @@
 phone-lookup
 ============
 
-valid phone range generation, phone validation and number formatting
+Phone validation and number formatting.
 
 
 ```

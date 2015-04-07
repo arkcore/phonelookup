@@ -1,3 +1,5 @@
+// jshint ignore: start
+
 'use strict';
 require('chai').Should();
 

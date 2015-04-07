@@ -1,17 +1,18 @@
 {
-  "name": "phone-lookup",
-  "version": "0.0.3",
+  "name": "phonelookup",
+  "version": "0.1.0",
   "description": "Phone lookup",
   "repository": {
     "type": "git",
-    "url": "git://github.com/arkcore/phone-lookup.git"
+    "url": "git://github.com/arkcore/phonelookup.git"
   },
   "dependencies": {
-    "lodash-node": "*",
-    "libxmljs": "*"
+    "libxmljs": "^0.13.0",
+    "lodash": "^3.6.0"
   },
   "devDependencies": {
-    "mocha": "*"
+    "chai": "^2.2.0",
+    "mocha": "^2.2.1"
   },
   "scripts": {
     "test": "mocha"
