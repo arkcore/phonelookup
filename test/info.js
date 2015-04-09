@@ -4,7 +4,6 @@
 require('chai').Should();
 
 var Phone = require('../');
-var lib = new Phone();
 
 var testPhones = {
 	'+78182653320': ['+7 818 265-33-20', 'fixedLine', 'RU', '8182653320'],
@@ -18,6 +17,8 @@ var testPhones = {
 describe('test phone.js:', function () {
 
 	it('info should return correct values', function() {
+
+		var lib = new Phone();
 		for(var phone in testPhones) {
 			var result = testPhones[phone];
 			var info = lib.info(phone);
@@ -30,9 +31,10 @@ describe('test phone.js:', function () {
 
 	it('generate 1k not similar random personal US phones', function() {
 
-		var exists = {};
+		var exists = {},
+			lib = new Phone(['mobile']);
 		for(var i=0; i < 1000; i++) {
-			var phone = lib.random('+1', ['personalNumber']);
+			var phone = lib.random('US');
 			if(exists[phone]) {
 				throw new Error('found existing phone');
 			}

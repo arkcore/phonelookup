@@ -26,8 +26,8 @@ var testPhone = '+1 212 CALL NOW';
 var normalizedPhone = phone.normalize(testPhone);
 console.log(normalizedPhone); // 12122255669
 
-// generate random phone for specified country conde
-var randomPhone = phone.random('+1');
+// generate random phone for specified country code
+var randomPhone = phone.random('US');
 console.log(randomPhone); // 15809280360
 
 // get phone info (or 'undefined' for invalid phone)
