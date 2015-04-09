@@ -1,24 +1,34 @@
 phone-lookup
 ============
 
-Phone validation and number formatting.
+**Phone validation and number formatting library** based on [google libphonenumber](https://github.com/googlei18n/libphonenumber)
 
 
+#### Install
 ```
-var Phone = require('phone-lookup');
+# npm install phonelookup
+```
 
-// valid phone types by default: ['generalDesc', 'fixedLine', 'mobile', 'personalNumber',
-// 'tollFree', 'premiumRate']
+### Usage examples
+Validate phone and get info
+```
+var Phone = require('phonelookup');
+
+// valid phone types by default:  ['generalDesc', 'fixedLine', 'mobile', 'personalNumber', 'tollFree', 'premiumRate'];;
+
 // you can test only mobiles and home numbers for example:
 // var phone = new Phone(['fixedLine', 'mobile']);
 
 var phone = new Phone();
-
 var testPhone = '+1 212 CALL NOW';
 
 // remove all non digit chars from phone and replace alphas by digits
 var normalizedPhone = phone.normalize(testPhone);
 console.log(normalizedPhone); // 12122255669
+
+// generate random phone for specified country conde
+var randomPhone = phone.random('+1');
+console.log(randomPhone); // 15809280360
 
 // get phone info (or 'undefined' for invalid phone)
 var info = phone.info(testPhone);
@@ -31,4 +41,6 @@ console.log(info);
   type: 'fixedLine',
   format: '+1 (212) 225-5669' }
 */
+
+//
 ```

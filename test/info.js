@@ -16,6 +16,7 @@ var testPhones = {
 };
 
 describe('test phone.js:', function () {
+
 	it('info should return correct values', function() {
 		for(var phone in testPhones) {
 			var result = testPhones[phone];
@@ -26,4 +27,17 @@ describe('test phone.js:', function () {
 			info.line.should.equal(result[3]);
 		}
 	});
+
+	it('generate 1k not similar random personal US phones', function() {
+
+		var exists = {};
+		for(var i=0; i < 1000; i++) {
+			var phone = lib.random('+1', ['personalNumber']);
+			if(exists[phone]) {
+				throw new Error('found existing phone');
+			}
+			exists[phone] = true;
+		}
+	});
+
 });
