@@ -29,14 +29,22 @@ describe('test phone.js:', function () {
 		}
 	});
 
-	it('generate 1k not similar random personal US phones', function() {
+	it('generate 10k not similar random personal US phones', function() {
 
+		this.timeout(10000);
 		var exists = {},
 			lib = new Phone(['mobile']);
-		for(var i=0; i < 1000; i++) {
+		for(var i=0; i < 10000; i++) {
 			var phone = lib.random('US');
+			if(!phone) {
+				throw new Error('empty number returned');
+			}
 			if(exists[phone]) {
 				throw new Error('found existing phone');
+			}
+			var info = lib.info(phone);
+			if(!info || info.id !== 'US') {
+				throw new Error('wrong phone info: ' + JSON.stringify(info));
 			}
 			exists[phone] = true;
 		}
