@@ -7,12 +7,12 @@
     "url": "git://github.com/arkcore/phonelookup.git"
   },
   "dependencies": {
-    "libxmljs": "^0.13.0",
     "lodash": "^3.6.0"
   },
   "devDependencies": {
     "chai": "^2.2.0",
-    "mocha": "^2.2.1"
+    "mocha": "^2.2.1",
+    "libxmljs": "^0.13.0"
   },
   "scripts": {
     "test": "mocha"

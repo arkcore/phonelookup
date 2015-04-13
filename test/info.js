@@ -29,12 +29,11 @@ describe('test phone.js:', function () {
 		}
 	});
 
-	it('generate 10k not similar random personal US phones', function() {
+	it('generate 1k not similar random US phones', function() {
 
-		this.timeout(10000);
 		var exists = {},
-			lib = new Phone(['mobile']);
-		for(var i=0; i < 10000; i++) {
+			lib = new Phone();
+		for(var i=0; i < 1000; i++) {
 			var phone = lib.random('US');
 			if(!phone) {
 				throw new Error('empty number returned');
